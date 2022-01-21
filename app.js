@@ -4,10 +4,15 @@ require('./assets/css/index.css')
 import './components'
 import router from "./router/index";
 
+import loader from "vue-ui-preloader";
 
+Vue.use(loader);
 
 
 new Vue({
     el: '#app',
-    router
+    router,
+    components:{
+        loader:loader
+    }
 })
