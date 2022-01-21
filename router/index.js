@@ -5,12 +5,12 @@ Vue.use(Router)
 
 //import you components
 import UserLogin from "../components/UserLogin";
-import Schedule from "../components/shedules";
+import Books from "../components/Books";
 import index from "../components/index";
 import UserRegistration from "../components/UserRegistration";
-import ScheduleDetails from "../components/ScheduleDetails";
 import Tasks from "../components/Tasks";
-import AddSchedule from "../components/AddSchedule";
+import AddBook from "../components/AddBook";
+import BookDetails from "../components/BookDetails";
 export default new Router({
     routes: [
         {
@@ -28,23 +28,23 @@ export default new Router({
             component:UserRegistration
         },
         {
-            path: 'schedule/:id/show',
-            name: 'schedule-details',
-            component:ScheduleDetails
+            path: 'book/:id/show',
+            name: 'book-details',
+            component:BookDetails
         },
         {
             path:'/user',
             component:Tasks,
                 children:[
                     {
-                        path: 'schedules',
-                        name: 'schedules',
-                        component:Schedule
+                        path: 'books',
+                        name: 'books',
+                        component:Books
                     },
                     {
-                        path: 'add/schedules',
-                        name: 'addSchedule',
-                        component:AddSchedule
+                        path: 'add/book',
+                        name: 'addBook',
+                        component:AddBook
                     },
 
                     ]

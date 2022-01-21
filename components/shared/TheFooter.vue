@@ -4,7 +4,9 @@
     <ul >
       <li class=" mr-2">
         <a class="text-center block text-white-800 bg- py-2 px-4" href="#">
-          <h2> PAGE FOOTER </h2>
+          <h3>Your online Book partner</h3>
+          <h3>@ 2022 all rights reserved</h3>
+          <h3>+25476990854</h3>
         </a>
       </li>
     </ul>
