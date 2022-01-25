@@ -2,9 +2,10 @@ const { VueLoaderPlugin } = require("vue-loader");
 const path = require("path");
 const htmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-
+const nodeExternals = require('webpack-node-externals');
 const autoprefixer = require("autoprefixer");
 module.exports = {
+    externals: [nodeExternals()],
     mode:'development',
   entry: {
     main: "./app.js",
@@ -67,6 +68,10 @@ module.exports = {
     alias: {
       vue$: 'vue/dist/vue.esm.js',
     },
+          fallback: {
+              util: require.resolve("util/")
+
+      },
     extensions: ["*", ".js", ".vue", ".json"],
   },
   devServer: {

@@ -1,7 +1,7 @@
 <template>
 
   <div v-if="loading">
-    <loader object="#ff9633" color1="#ffffff" color2="#17fd3d" size="5" speed="2" bg="#343a40" objectbg="#999793" opacity="80" name="circular"></loader>
+<!--    <loader object="#ff9633" color1="#ffffff" color2="#17fd3d" size="5" speed="2" bg="#343a40" objectbg="#999793" opacity="80" name="circular"></loader>-->
 
   </div>
   <div v-else class="container">
@@ -47,7 +47,7 @@
         </thead>
         <tbody class="divide-y divide-gray-200">
 
-        <tr v-for="(book,index) in books" :key="index">
+        <tr v-for="(book,index) in fetchedBooks " :key="index">
           <td>{{ book.isbn }}</td>
           <td>{{ book.title }}</td>
           <td>{{ book.author }}</td>
@@ -55,16 +55,16 @@
           <td>{{ book.price }}</td>
           <td>{{ book.pages }}</td>
           <td>
-            <button @click="editTask" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
-              EDIT
-            </button>
+<!--            <button @click="editTask" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">-->
+<!--              EDIT-->
+<!--            </button>-->
             <button @click="deleteTask(book.isbn)"  class=" ml-5 bg-red-500 hover:bg-maroon-700 text-white font-bold py-2 px-4 border  rounded">
               DELETE
             </button>
 
-            <button  class=" ml-5 bg-green-500 hover:bg-green-100 text-white font-bold py-2 px-4 border  rounded">
-              <router-link :to="{ name: 'book-details', params: { id: book.isbn }}">VIEW DETAILS</router-link>
-            </button>
+<!--            <button  class=" ml-5 bg-green-500 hover:bg-green-100 text-white font-bold py-2 px-4 border  rounded">-->
+<!--              <router-link :to="{ name: 'book-details', params: { id: book.isbn }}">VIEW DETAILS</router-link>-->
+<!--            </button>-->
           </td>
 
         </tr>
@@ -80,24 +80,29 @@
 
 <script>
 const axios = require('axios');
+import {mapGetters} from "vuex";
 export default {
   data() {
     return {
       search:false,
       loading:false,
-      books:[],
       completed:true,
       isScheduled:true,
       min:"",
       max:""
     };
   },
+  computed: {
+    ...mapGetters('books', {
+       fetchedBooks:'getBooks'
+    })
+  },
   methods: {
     getBooks() {
       axios.get('http://localhost:3000/api/v1/books')
           .then((response) => {
-            console.log(response.data);
-            this.books = response.data;
+            this.$store.dispatch('books/getBooks',response.data);
+            // this.books = response.data;
           })
           .catch(function (error) {
             // handle error
@@ -122,7 +127,6 @@ export default {
       this.search =!this.search;
     },
     searchBooks() {
-console.log(this.min);
         if (this.min == ""){
           alert('min price is Required');
           return;
@@ -149,9 +153,9 @@ console.log(this.min);
           this.$router.push('/user/books')
         }
     },
-    editTask() {
-      alert('TASK EDITED SUCCESSFULLY');
-    },
+    // editTask() {
+    //   alert('TASK EDITED SUCCESSFULLY');
+    // },
 
   },
   beforeMount(){

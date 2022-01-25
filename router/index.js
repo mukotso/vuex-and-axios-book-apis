@@ -11,26 +11,35 @@ import UserRegistration from "../components/UserRegistration";
 import Tasks from "../components/Tasks";
 import AddBook from "../components/AddBook";
 import BookDetails from "../components/BookDetails";
-export default new Router({
+
+const router =  new Router({
     routes: [
         {
             path: '/',
             name: 'index',
-            component: index
+            component: index,
         },
         {
             path: '/login',
             name: 'login',
-            component: UserLogin
+            component: UserLogin,
+            meta: {
+                guest:true
+            }
         },{
             path: '/register',
             name: 'register',
-            component:UserRegistration
+            component:UserRegistration,
+            meta: {
+                guest:true
+            }
         },
         {
             path: 'book/:id/show',
             name: 'book-details',
-            component:BookDetails
+            component:BookDetails, meta: {
+                requiresAuth:true
+            }
         },
         {
             path:'/user',
@@ -39,12 +48,18 @@ export default new Router({
                     {
                         path: 'books',
                         name: 'books',
-                        component:Books
+                        component:Books,
+                        meta: {
+                            requiresAuth:true
+                        }
                     },
                     {
                         path: 'add/book',
                         name: 'addBook',
-                        component:AddBook
+                        component:AddBook,
+                        meta: {
+                            requiresAuth:true
+                        }
                     },
 
                     ]
@@ -54,5 +69,28 @@ export default new Router({
 
     ],
     mode: 'history'
-})
+});
 
+// Meta Handling
+router.beforeEach((to, from, next) => {
+    const token = localStorage.getItem('jwToken');
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        if (!token){
+            next({ name: 'login' });
+        }
+        else {
+            next();
+        }
+    }
+    else if (to.matched.some(record => record.meta.guest)) {
+        if (localStorage.getItem('jwToken') == null) {
+            next()
+        } else {
+            next({ name: 'books' })
+        }
+    } else {
+        next()
+    }
+});
+
+export default router;

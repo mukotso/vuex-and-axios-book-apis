@@ -8,7 +8,7 @@
         type="text" placeholder="book title" v-model="title"/>
     <input
         class="m-5 sm:w-1 md:w-1/2 text-black  border-gray-400  hover:bg-gray-200 border-black-200 rounded py-3 px-4 mb-5"
-        type="text" placeholder="isbn" v-model="isbn"/>
+        type="number" placeholder="isbn" v-model="isbn"/>
     <input
         class="m-5 sm:w-1 md:w-1/2 text-black  border-gray-400  hover:bg-gray-200 border-black-200 rounded py-3 px-4 mb-5"
         type="text" placeholder="Author" v-model="author"/>
